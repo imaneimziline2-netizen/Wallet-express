@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": 1772106130442,
+      "name": "zinb lbogosa lwa3raa",
+      "email": "zinb@gmail.com",
+      "phone": 1234567
+    },
+    {
+      "id": 1772106449471,
+      "name": "IMAN ",
+      "email": "IMANE@gmail.com",
+      "phone": 123234567
+    }
+  ],
+  "wallets": [
+    {
+      "id": 1772108616925,
+      "user_id": 1772106449471,
+      "name": "imane's wallet",
+      "solde": 0
+    }
+  ]
+}
