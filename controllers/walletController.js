@@ -1,3 +1,4 @@
+const { json } = require("express");
 const { readData, writeData } = require("../Data/store");
 
 // creaite wallet________
@@ -52,6 +53,45 @@ exports.getWalId = (req, res) => {
     res.status(200).json(wallet);
 };
 // updat
-exports.UpWallet = (req,res)=>{
+exports.UpWallet = (req, res) => {
     const data = readData();
+    const id = parseInt(req.params.id);
+    const wallet = data.wallets.find((wal) => wal.id === id);
+    if (!wallet) {
+        res.status(400).json({ message: "note found" });
+        return;
+    }
+    const {name ,user_id,solde}=req.body
+    wallet.name = name;
+    wallet.user_id = user_id;
+    wallet.solde = solde;
+    writeData(data);
+    res.json(wallet);
+};
+
+// DELETE
+exports.DeleteWallet= (req,res)=>{
+    const data = readData();
+    const id = parseInt(req.params.id);
+      data.wallets = data.wallets.filter((wal) => wal.id !== id);
+    
+    writeData(data);
+    res.status(200).json({message: "deleted", data: data.wallets});
 }
+
+
+// onst deleteUser = (req, res, id) => {
+//     const data = readData();  
+//     const userIndex = data.users.findIndex((u) => u.id == id); 
+
+//     if (userIndex === -1) { 
+//         res.writeHead(404, { "Content-Type": "application/json" });
+//         res.end(JSON.stringify({ error: "User not found" }));
+//         return;
+//     }
+//     data.users.splice(userIndex, 1);
+//     writeData(data); 
+
+//     res.writeHead(200, { "Content-Type": "application/json" });
+//     res.end(JSON.stringify({ message: "User deleted" })); 
+// };
