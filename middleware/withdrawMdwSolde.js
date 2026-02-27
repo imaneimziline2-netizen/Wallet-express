@@ -1,3 +1,4 @@
+const { readData, writeData } = require("../Data/store");
 
 function withdrawMdwSolde(req, res, next) {
     const data = readData();
@@ -12,4 +13,4 @@ function withdrawMdwSolde(req, res, next) {
     }
     next();
 }
-module.exports =withdrawMdwSolde
+module.exports = withdrawMdwSolde;
