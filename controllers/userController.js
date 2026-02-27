@@ -54,3 +54,15 @@ exports.deleteUser = (req, res) => {
 
     res.json({ message: "User deleted" });
 };
+
+// get b id
+exports.getUserById = (req,res)=>{
+    const data = readData();
+    const id = parseInt(req.params.id);
+    const User = data.users.find((us)=>us.id === id) ;
+    if(!User){
+        res.status(404).json({message: "not found"});
+        return
+    }
+    res.status(200).json(User)
+}
