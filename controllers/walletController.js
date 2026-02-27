@@ -61,7 +61,7 @@ exports.UpWallet = (req, res) => {
         res.status(400).json({ message: "note found" });
         return;
     }
-    const {name ,user_id,solde}=req.body
+    const { name, user_id, solde } = req.body;
     wallet.name = name;
     wallet.user_id = user_id;
     wallet.solde = solde;
@@ -70,28 +70,24 @@ exports.UpWallet = (req, res) => {
 };
 
 // DELETE
-exports.DeleteWallet= (req,res)=>{
+exports.DeleteWallet = (req, res) => {
     const data = readData();
     const id = parseInt(req.params.id);
-      data.wallets = data.wallets.filter((wal) => wal.id !== id);
-    
+    data.wallets = data.wallets.filter((wal) => wal.id !== id);
+
     writeData(data);
-    res.status(200).json({message: "deleted", data: data.wallets});
-}
+    res.status(200).json({ message: "deleted", data: data.wallets });
+};
 
-
-// onst deleteUser = (req, res, id) => {
-//     const data = readData();  
-//     const userIndex = data.users.findIndex((u) => u.id == id); 
-
-//     if (userIndex === -1) { 
-//         res.writeHead(404, { "Content-Type": "application/json" });
-//         res.end(JSON.stringify({ error: "User not found" }));
-//         return;
-//     }
-//     data.users.splice(userIndex, 1);
-//     writeData(data); 
-
-//     res.writeHead(200, { "Content-Type": "application/json" });
-//     res.end(JSON.stringify({ message: "User deleted" })); 
-// };
+exports.withdraw = (req, res) => {
+    const data = readData();
+    const id = parseInt(req.params.id);
+    const { amount, walletId } = req.body;
+         const wallet = data.wallets.find((wal) => wal.id === walletId);
+    if (wallet.user_id !== id) {
+        return res.status(400).json({ messge: "Unauthorised" });
+    }
+    wallet.solde -= amount;
+    writeData(data);
+    res.status(200).json({ wallet });
+};
